@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        webview.loadUrl("https://twitter.com")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
