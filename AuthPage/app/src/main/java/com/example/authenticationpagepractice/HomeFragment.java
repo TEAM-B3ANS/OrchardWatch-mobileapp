@@ -1,10 +1,10 @@
 package com.example.authenticationpagepractice;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
@@ -16,10 +16,12 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        webView = (WebView) getView().findViewById(R.id.webView);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        webView = (WebView) view.findViewById(R.id.webView);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://www.google.com/");
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("https://coldspringorchard.com/");
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
     }
 }
