@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomePage extends AppCompatActivity {
+    //Testing
     private WebView webView;
     BottomNavigationView bottomNav;
     String authenticationKey;
