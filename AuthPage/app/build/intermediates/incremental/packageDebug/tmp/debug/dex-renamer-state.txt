@@ -1,4 +1,0 @@
-#Thu Nov 07 15:44:50 EST 2019
-base.0=/Users/JohnBurns/Desktop/CS320/OrchardWatch/OrchardWatch-mobileapp/AuthPage/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
