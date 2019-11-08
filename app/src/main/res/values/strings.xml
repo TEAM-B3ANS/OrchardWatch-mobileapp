@@ -10,4 +10,7 @@
     <string name="settings">Settings</string>
     <string name="photo_upload_page">PHOTO UPLOAD PAGE</string>
     <string name="settings_page">SETTINGS PAGE</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
