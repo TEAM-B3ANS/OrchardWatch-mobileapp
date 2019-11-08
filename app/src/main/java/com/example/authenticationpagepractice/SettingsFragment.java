@@ -1,5 +1,6 @@
 package com.example.authenticationpagepractice;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class SettingsFragment extends Fragment {
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
 
     @Nullable
     @Override

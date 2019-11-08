@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -19,18 +21,33 @@ public class MainActivity extends AppCompatActivity {
     EditText authInput;
     Button submitButton;
 
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sp = getSharedPreferences("MyData",MODE_PRIVATE);
+        editor = sp.edit();
+
+        checkSharedPreferences();
+
+        if (!authenticationKey.equals("EMPTY")) {
+            moveToHomePage();
+        }
+
         authInput = (EditText) findViewById(R.id.AuthKey);
         submitButton = (Button) findViewById(R.id.button);
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 authenticationKey = authInput.getText().toString();
+                editor.putString("AuthKey", authenticationKey);
+                editor.commit();
 
                 showToast(authenticationKey);
                 moveToHomePage();
@@ -39,8 +56,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void checkSharedPreferences() {
+        authenticationKey = sp.getString("AuthKey", "EMPTY");
+    }
+
     private void showToast(String text) {
-        Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
     }
 
     private void moveToHomePage() {
