@@ -20,6 +20,8 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new HomeFragment()).commit();
         bottomNav = findViewById(R.id.navBar);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
     }
