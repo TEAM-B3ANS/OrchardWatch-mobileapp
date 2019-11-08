@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Authentication Page Practice</string>
+    <string name="app_name">OrchardWatch for Growers</string>
     <string name="submit">Submit</string>
     <string name="authentication_key">Authentication Key</string>
     <string name="orchardwatch_logo">OrchardWatch Logo</string>
