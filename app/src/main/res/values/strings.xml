@@ -15,4 +15,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signoutButton">Sign out</string>
     <string name="todo2">TODO</string>
+    <string name="choose_from_gallery">Choose from Gallery</string>
+    <string name="take_photo">Take New Photo</string>
+    <string name="placeholder_image">placeholder image</string>
 </resources>

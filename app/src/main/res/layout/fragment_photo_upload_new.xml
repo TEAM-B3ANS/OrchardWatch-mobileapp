@@ -11,11 +11,11 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/takeNewButton"
             android:layout_width="409dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Take Photo"
+            android:text="@string/take_photo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -24,12 +24,25 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/chooseGalleryButton"
             android:layout_width="409dp"
             android:layout_height="wrap_content"
-            android:text="Choose from Gallery"
+            android:text="@string/choose_from_gallery"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
+            app:layout_constraintTop_toBottomOf="@+id/takeNewButton" />
+
+        <ImageView
+            android:id="@+id/chosenImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:contentDescription="@string/placeholder_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chooseGalleryButton"
+            android:src="@drawable/orchardwatchowl" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
