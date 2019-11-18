@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ public class SettingsFragment extends Fragment {
     SharedPreferences.Editor editor;
 
     Button signoutButton;
+    TextView authenticationKey;
 
     @Nullable
     @Override
@@ -30,6 +32,9 @@ public class SettingsFragment extends Fragment {
         editor = sp.edit();
 
         signoutButton = (Button) this.getView().findViewById(R.id.signoutButton);
+        authenticationKey = (TextView) this.getView().findViewById(R.id.authKey);
+
+        authenticationKey.setText("Authentication Key: " + (sp.getString("AuthKey", "EMPTY")));
 
         signoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
