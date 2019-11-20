@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("AuthKey", authenticationKey);
                 editor.commit();
 
-                showToast(authenticationKey);
+                //showToast(authenticationKey);
                 moveToHomePage();
             }
         });

@@ -15,4 +15,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signoutButton">Sign out</string>
     <string name="todo2">TODO</string>
+    <string name="sign_out_message">Only sign out if you want to enter a new authentication key. Otherwise, simply exit the app and you will be automatically signed in upon opening it in the future!</string>
+    <string name="AllowCameraAccess">Allow app to access camera</string>
+    <string name="authKey">Text</string>
+    <string name="AllowGalleryAccess">Allow app to access gallery</string>
 </resources>

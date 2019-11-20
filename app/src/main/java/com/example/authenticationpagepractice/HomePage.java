@@ -28,7 +28,7 @@ public class HomePage extends AppCompatActivity {
 
         sp = getSharedPreferences("MyData",MODE_PRIVATE);
         authenticationKey = sp.getString("AuthKey", "EMPTY");
-        Toast.makeText(HomePage.this, authenticationKey, Toast.LENGTH_LONG).show();
+        //Toast.makeText(HomePage.this, authenticationKey, Toast.LENGTH_LONG).show();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new HomeFragment()).commit();
