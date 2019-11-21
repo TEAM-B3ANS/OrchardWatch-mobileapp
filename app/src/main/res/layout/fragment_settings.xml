@@ -105,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:text="@string/textview"
+        android:text="@string/authKey"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +117,7 @@
         android:layout_height="78dp"
         android:layout_marginTop="12dp"
         android:gravity="center_vertical"
-        android:text="@string/signOutSentence"
+        android:text="@string/sign_out_message"
         android:textSize="13sp"
         app:layout_constraintStart_toStartOf="@id/view"
         app:layout_constraintTop_toTopOf="@+id/view" />
@@ -127,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/CameraAccessLine"
+        android:text="@string/AllowCameraAccess"
         app:layout_constraintStart_toStartOf="@+id/view2"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
@@ -136,7 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/PhotosAccessLine"
+        android:text="@string/AllowGalleryAccess"
         app:layout_constraintStart_toStartOf="@+id/CameraAccess"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
 

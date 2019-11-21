@@ -2,7 +2,7 @@
 
 ## Team information
 
-Team B3ANS - Track 1
+Team B3ANS - Track II (oof)
 CS 320 2019 Fall
 
 ## Project description

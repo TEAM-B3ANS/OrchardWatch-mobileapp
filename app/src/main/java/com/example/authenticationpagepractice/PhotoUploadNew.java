@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.os.Build;
+import androidx.core.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +23,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.InputStream;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Environment;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PhotoUploadNew extends Fragment {
+    //Making the variables for later use
+    Button takePhoto;
+    Button takeGallery;
+    ImageView photo;
+    String filePath;
+    static final int REQUEST_TAKE_PHOTO = 1;
+    static final int REQUEST_CHOOSE_PHOTO = 2;
 
     private static final int TAKE_NEW = 1;
     private static final int FROM_GALLERY = 2;
@@ -38,42 +54,65 @@ public class PhotoUploadNew extends Fragment {
         //chosenImage = getView().findViewById(R.id.chosenImage);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_photo_upload_new, container, false);
+
     }
 
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        takeNewButton = this.getView().findViewById(R.id.takeNewButton);
-        fromGalleryButton = this.getView().findViewById(R.id.chooseGalleryButton);
+        //Initializing the on-screen components
+        takePhoto = this.getView().findViewById(R.id.takePhotoButton);
+        takeGallery = this.getView().findViewById(R.id.takeGalleryButton);
+        photo = this.getView().findViewById(R.id.photoImage);
 
-        chosenImage = this.getView().findViewById(R.id.chosenImage);
+        //Check for permissions for Camera and Gallery Use
+        if (Build.VERSION.SDK_INT >= 23){
+            requestPermissions(new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},2);
+        }
 
-        takeNewButton.setOnClickListener(new View.OnClickListener() {
+        //Taking photo from camera click
+        takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                takeNew(view);
+                dispatchTakePicture();
             }
         });
 
-        fromGalleryButton.setOnClickListener(new View.OnClickListener() {
+        //Taking photo from gallery click
+        takeGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fromGallery(view);
+                chooseFromGallery();
             }
         });
+    }
+
+    private void chooseFromGallery(){
+        //Create an Intent with action as ACTION_PICK
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("image/*");
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        // Launching the Intent
+        startActivityForResult(intent,REQUEST_CHOOSE_PHOTO);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case TAKE_NEW: break;
+            case TAKE_NEW:
+                Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+                photo.setImageBitmap(bitmap);
+                break;
             case FROM_GALLERY:
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     System.out.println(data.getDataString());
                     try {
                         InputStream is = getContext().getContentResolver().openInputStream(data.getData());
                         Bitmap bmp = BitmapFactory.decodeStream(is);
-                        chosenImage.setImageBitmap(bmp);
+                        photo.setImageBitmap(bmp);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -141,5 +180,44 @@ public class PhotoUploadNew extends Fragment {
         intent.putExtra("return-data", true);
 
         startActivityForResult(intent, FROM_GALLERY);
+    }
+  
+      private void dispatchTakePicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(this.getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            photoFile = createImageFile();
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this.getActivity().getApplicationContext(),
+                        "com.example.authenticationpagepractice.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
+
+    private File createImageFile()  {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = this.getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(
+                    imageFileName,  /* prefix */
+                    ".jpg",         /* suffix */
+                    storageDir      /* directory */
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Save a file: path for use with ACTION_VIEW intents
+        filePath = image.getAbsolutePath();
+        return image;
     }
 }

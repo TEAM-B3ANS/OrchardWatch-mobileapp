@@ -19,8 +19,8 @@
     <string name="take_photo">Take New Photo</string>
     <string name="placeholder_image">placeholder image</string>
     <string name="authentication_key_label">Authentication Key:</string>
-    <string name="textview">TextView</string>
-    <string name="signOutSentence">Only sign out if you want to enter a new authentication key. Otherwise, simply exit the app and you will be automatically signed in upon opening it in the future!</string>
-    <string name="CameraAccessLine">Allow app to access camera</string>
-    <string name="PhotosAccessLine">Allow app to access photo gallery</string>
+    <string name="sign_out_message">Only sign out if you want to enter a new authentication key. Otherwise, simply exit the app and you will be automatically signed in upon opening it in the future!</string>
+    <string name="AllowCameraAccess">Allow app to access camera</string>
+    <string name="authKey">Text</string>
+    <string name="AllowGalleryAccess">Allow app to access gallery</string>
 </resources>

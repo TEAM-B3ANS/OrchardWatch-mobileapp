@@ -26,7 +26,6 @@ public class PhotoUploadFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_photo_upload, container, false);
-
     }
 
     @Override
