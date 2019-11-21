@@ -2,29 +2,34 @@ package com.example.authenticationpagepractice;
 
 import android.Manifest;
 import android.app.Activity;
-import android.os.Build;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import android.provider.MediaStore;
+import android.os.Build;
+import androidx.core.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.content.Intent;
+
+import java.io.InputStream;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 
 public class PhotoUploadNew extends Fragment {
     //Making the variables for later use
@@ -35,9 +40,18 @@ public class PhotoUploadNew extends Fragment {
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int REQUEST_CHOOSE_PHOTO = 2;
 
+    private static final int TAKE_NEW = 1;
+    private static final int FROM_GALLERY = 2;
+    private static final int REQUEST_READ_EXTERNAL_STORAGE = 3;
+
+    private ImageView chosenImage;
+    private Button takeNewButton;
+    private Button fromGalleryButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //chosenImage = getView().findViewById(R.id.chosenImage);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_photo_upload_new, container, false);
 
@@ -86,32 +100,89 @@ public class PhotoUploadNew extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK){//Making sure the process is working
-            if (requestCode == 1) { //Taking photo from camera intent
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case TAKE_NEW:
                 Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                 photo.setImageBitmap(bitmap);
+                break;
+            case FROM_GALLERY:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    System.out.println(data.getDataString());
+                    try {
+                        InputStream is = getContext().getContentResolver().openInputStream(data.getData());
+                        Bitmap bmp = BitmapFactory.decodeStream(is);
+                        photo.setImageBitmap(bmp);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-            } else if (requestCode == 2){ //Taking photo from gallery intent
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                // Get the cursor
-                Cursor cursor = this.getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                // Move to first row
-                cursor.moveToFirst();
-                //Get the column index of MediaStore.Images.Media.DATA
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                //Gets the String value in the column
-                String imgDecodableString = cursor.getString(columnIndex);
-                cursor.close();
-                // Set the Image in ImageView after decoding the String
-                photo.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
-            }
+                }
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + requestCode);
         }
     }
 
-    private void dispatchTakePicture() {
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_READ_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
+    public void takeNew(View view) {
+
+    }
+
+    public void fromGallery(View view) {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (shouldShowRequestPermissionRationale(
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Explain to the user why we need to read the contacts
+            }
+
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    REQUEST_READ_EXTERNAL_STORAGE);
+
+            // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+            // app-defined int constant that should be quite unique
+
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        intent.putExtra("crop", true);
+        intent.putExtra("scale", true);
+        intent.putExtra("outputX", 256);
+        intent.putExtra("outputY", 256);
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("return-data", true);
+
+        startActivityForResult(intent, FROM_GALLERY);
+    }
+  
+      private void dispatchTakePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(this.getActivity().getPackageManager()) != null) {
@@ -149,6 +220,4 @@ public class PhotoUploadNew extends Fragment {
         filePath = image.getAbsolutePath();
         return image;
     }
-
-
 }

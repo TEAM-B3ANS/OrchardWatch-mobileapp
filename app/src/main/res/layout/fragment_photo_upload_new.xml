@@ -17,7 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/takePhotoButton"
         app:layout_constraintVertical_bias="0.183" />
-
     <Button
         android:id="@+id/takePhotoButton"
         android:layout_width="wrap_content"
