@@ -15,7 +15,9 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.os.Build;
+
 import androidx.core.content.FileProvider;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +25,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.InputStream;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -66,8 +68,8 @@ public class PhotoUploadNew extends Fragment {
         photo = this.getView().findViewById(R.id.photoImage);
 
         //Check for permissions for Camera and Gallery Use
-        if (Build.VERSION.SDK_INT >= 23){
-            requestPermissions(new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},2);
+        if (Build.VERSION.SDK_INT >= 23) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
         }
 
         //Taking photo from camera click
@@ -87,16 +89,16 @@ public class PhotoUploadNew extends Fragment {
         });
     }
 
-    private void chooseFromGallery(){
+    private void chooseFromGallery() {
         //Create an Intent with action as ACTION_PICK
-        Intent intent=new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         // Sets the type as image/*. This ensures only components of type image are selected
         intent.setType("image/*");
         //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
         String[] mimeTypes = {"image/jpeg", "image/png"};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         // Launching the Intent
-        startActivityForResult(intent,REQUEST_CHOOSE_PHOTO);
+        startActivityForResult(intent, REQUEST_CHOOSE_PHOTO);
     }
 
     @Override
@@ -181,8 +183,8 @@ public class PhotoUploadNew extends Fragment {
 
         startActivityForResult(intent, FROM_GALLERY);
     }
-  
-      private void dispatchTakePicture() {
+
+    private void dispatchTakePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(this.getActivity().getPackageManager()) != null) {
@@ -200,7 +202,7 @@ public class PhotoUploadNew extends Fragment {
         }
     }
 
-    private File createImageFile()  {
+    private File createImageFile() {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
