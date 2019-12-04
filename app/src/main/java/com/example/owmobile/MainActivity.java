@@ -1,19 +1,14 @@
-package com.example.authenticationpagepractice;
+package com.example.owmobile;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 import android.content.Intent;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 

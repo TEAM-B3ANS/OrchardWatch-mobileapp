@@ -1,4 +1,4 @@
-package com.example.authenticationpagepractice;
+package com.example.owmobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -1,10 +1,9 @@
-package com.example.authenticationpagepractice;
+package com.example.owmobile;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
